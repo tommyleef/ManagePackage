@@ -96,6 +96,9 @@ namespace manageObj
 			// 
 			this.dgvpkgname.AllowUserToAddRows = false;
 			this.dgvpkgname.AllowUserToDeleteRows = false;
+			this.dgvpkgname.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.dgvpkgname.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -115,6 +118,7 @@ namespace manageObj
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvpkgname.DefaultCellStyle = dataGridViewCellStyle2;
 			this.dgvpkgname.Location = new System.Drawing.Point(257, 12);
+			this.dgvpkgname.MinimumSize = new System.Drawing.Size(827, 545);
 			this.dgvpkgname.MultiSelect = false;
 			this.dgvpkgname.Name = "dgvpkgname";
 			this.dgvpkgname.RowHeadersVisible = false;
@@ -124,10 +128,13 @@ namespace manageObj
 			// 
 			// lbiws
 			// 
+			this.lbiws.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left)));
 			this.lbiws.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lbiws.FormattingEnabled = true;
 			this.lbiws.ItemHeight = 20;
 			this.lbiws.Location = new System.Drawing.Point(13, 13);
+			this.lbiws.MinimumSize = new System.Drawing.Size(130, 544);
 			this.lbiws.Name = "lbiws";
 			this.lbiws.Size = new System.Drawing.Size(130, 544);
 			this.lbiws.TabIndex = 15;
@@ -268,8 +275,9 @@ namespace manageObj
 			this.Controls.Add(this.dgvpkgname);
 			this.Controls.Add(this.statusStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MinimumSize = new System.Drawing.Size(1112, 625);
 			this.Name = "MainForm";
-			this.Text = "Manage Package V 1.0";
+			this.Text = "Manage Package V 1.1";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();

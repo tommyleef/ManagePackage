@@ -416,6 +416,7 @@ namespace manageObj
 			else
 				str_ouname = "CUTE-WKS";
 			
+			List<string> wkslist = new List<string>();
 			string strsite = Environment.UserDomainName;
 			lbsite.Text = "Site:"+strsite.Substring(0,3);
 
@@ -430,33 +431,36 @@ namespace manageObj
     		
     		if( rbcute.Checked )
     		{
-    			lbiws.Items.Clear();
 	    		foreach(SearchResult resEnt in mySearcher.FindAll())
 			    {
 	    			string ComputerName = resEnt.Properties["cn"][0].ToString();
 	
 			        if (ComputerName.Contains("CK") || ComputerName.Contains("GT") || ComputerName.Contains("BS") || ComputerName.Contains("BO") || ComputerName.Contains("XSR"))
 			        {
-			        	lbiws.Items.Add(ComputerName);
+			        	wkslist.Add(ComputerName);
 			        }
 			    }
     		}
     		else if( rbcuss.Checked )
     		{
-    			lbiws.Items.Clear();
     			foreach(SearchResult resEnt in mySearcher.FindAll())
 			    {
 	    			string ComputerName = resEnt.Properties["cn"][0].ToString();
 	
 			        if ( ComputerName.Contains("AKA") )
 			        {
-			        	lbiws.Items.Add(ComputerName);
+			        	wkslist.Add(ComputerName);
 			        }
 			    }
     		}
 		
 		    mySearcher.Dispose();
 		    entry.Dispose();
+		    
+		    wkslist.Sort();
+		    lbiws.Items.Clear();
+		    lbiws.Items.AddRange(wkslist.ToArray());
+		    lbiws.SelectedIndex = 0;
 		}
 	}
 }
