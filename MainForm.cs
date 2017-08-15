@@ -87,11 +87,14 @@ namespace manageObj
 		void BtlistClick(object sender, EventArgs e)
 		{
 			listpackages();
+			tbwks.Text = string.Empty;
+			tbpackage.Enabled = true;
 			toolStripProgressBar1.Value = 0;
 		}
 		
 		private DataTable dtpkglist = new DataTable();
 		private DataRow drpkg;
+		private List<string> wkslist = new List<string>();
 		
 		private void listpackages()
 		{
@@ -205,7 +208,8 @@ namespace manageObj
 				string myResult = outParams["ReturnValue"].ToString();
 				if( string.Equals( "0" , myResult , StringComparison.OrdinalIgnoreCase) )
 				{
-					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" active successful. Workstation: "+strSelectedIws;					
+					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" active successful. Workstation: "+strSelectedIws;
+					fslrdrhandle( strSelectedIws, dgvrselected.Cells["Id"].Value.ToString() );
 					listpackages();
 				}
 				else
@@ -216,7 +220,40 @@ namespace manageObj
 			{
 				toolStripStatusLabel2.Text = "Line207"+ex.Message;
 			}
+			
 			toolStripProgressBar1.Value = 0;
+		}
+		
+		private void fslrdrhandle(string wks, string pkgid)
+		{
+			try
+			{
+				string ObjectPath = string.Format(@"\\{0}\root\default:VirtualSoftwareSublayer.PackageId='{1}'", wks, pkgid );
+				ManagementObject SVSClass = new ManagementObject(ObjectPath);
+				ManagementObjectCollection vspCollection =  vspClass.GetInstances();
+				toolStripProgressBar1.PerformStep();
+				
+				List<string> filepath = new List<string>();
+				
+				foreach (ManagementObject vspObject in vspCollection)
+	            {
+					if( vspObject.GetPropertyValue("FileRedirectPath") != null )
+						filepath.Add( vspObject.GetPropertyValue("FileRedirectPath").ToString() );
+				}
+				
+				/*if( filepath.Count != 0 )
+				{
+					foreach( string path in filepath )
+					{
+						
+					}
+				}*/
+				SVSClass.Dispose();
+			}
+			catch( Exception ex )
+			{
+				toolStripStatusLabel2.Text = "fslrdrhandle error:"+ex.Message;
+			}
 		}
 		
 		void LbiwsSelectedIndexChanged(object sender, EventArgs e)
@@ -416,7 +453,6 @@ namespace manageObj
 			else
 				str_ouname = "CUTE-WKS";
 			
-			List<string> wkslist = new List<string>();
 			string strsite = Environment.UserDomainName;
 			lbsite.Text = "Site:"+strsite.Substring(0,3);
 
@@ -435,7 +471,7 @@ namespace manageObj
 			    {
 	    			string ComputerName = resEnt.Properties["cn"][0].ToString();
 	
-			        if (ComputerName.Contains("CK") || ComputerName.Contains("GT") || ComputerName.Contains("BS") || ComputerName.Contains("BO") || ComputerName.Contains("XSR"))
+	    			if (ComputerName.Contains("CK") || ComputerName.Contains("GT") || ComputerName.Contains("BS") || ComputerName.Contains("BO") || ComputerName.Contains("XSR") || ComputerName.Contains("TD"))
 			        {
 			        	wkslist.Add(ComputerName);
 			        }
@@ -461,6 +497,67 @@ namespace manageObj
 		    lbiws.Items.Clear();
 		    lbiws.Items.AddRange(wkslist.ToArray());
 		    lbiws.SelectedIndex = 0;
+		}
+		
+		void tbwksTextChanged(object sender, EventArgs e)
+		{
+			lbiws.Items.Clear();
+			if( !string.IsNullOrEmpty( tbwks.Text ) )
+			{
+				foreach(string wks in wkslist)
+				{
+					if( wks.Contains( tbwks.Text.ToUpper() ) || wks.Contains( tbwks.Text.ToLower() ) )
+						lbiws.Items.Add( wks );
+				}
+			}
+			else
+				lbiws.Items.AddRange( wkslist.ToArray() );
+
+		}
+		
+		void tbpackageTextChanged(object sender, EventArgs e)
+		{
+			string pkgfilter = string.Empty;
+			if( !string.IsNullOrEmpty( tbpackage.Text ) )
+				pkgfilter = string.Format(@"[{0}] like '%{1}%'", "PackageName", tbpackage.Text.ToUpper() );
+			else
+				pkgfilter = string.Format(@"[{0}] like '*'", "PackageName");
+			
+			(dgvpkgname.DataSource as DataTable).DefaultView.RowFilter = pkgfilter;
+		}
+		
+		void BtAutoStatusClick(object sender, EventArgs e)
+		{
+			DataGridViewRow dgvrselected = dgvpkgname.SelectedRows[0];
+			string myGuid = dgvrselected.Cells["Id"].Value.ToString();			
+			bool myAuto = string.Equals( dgvrselected.Cells["AutoActivate"].Value.ToString() , "true" , StringComparison.OrdinalIgnoreCase );
+			
+			try
+			{
+				string ObjectPath = string.Format(@"\\{0}\root\default:VirtualSoftwarePackage.Id='{1}'", strSelectedIws, myGuid);
+		        ManagementObject SVSClass = new ManagementObject(ObjectPath);
+		        toolStripProgressBar1.PerformStep();
+		        ManagementBaseObject inParams = SVSClass.GetMethodParameters("SetAutoActivate");
+		        inParams["AutoActivate"] = !myAuto;
+		        ManagementBaseObject outParams = SVSClass.InvokeMethod("SetAutoActivate", inParams, null);
+		        toolStripProgressBar1.PerformStep();
+		        string myResult = outParams["ReturnValue"].ToString();
+		        SVSClass.Dispose();
+		        if( string.Equals( "0" , myResult , StringComparison.OrdinalIgnoreCase) )
+				{
+					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" invert auto activate successful. Workstation: "+strSelectedIws+".";
+					toolStripProgressBar1.PerformStep();
+					listpackages();
+				}
+				else
+					toolStripStatusLabel2.Text = "Return: "+myResult+" "+dgvrselected.Cells["PackageName"].Value.ToString()+" invert auto activate failed. Workstation: "+strSelectedIws;
+			}
+			catch(Exception ex)
+			{
+				toolStripStatusLabel2.Text = "Invert atuo activate Error:"+ex.Message;
+				toolStripProgressBar1.Value = 0;
+			}
+			toolStripProgressBar1.Value = 0;
 		}
 	}
 }

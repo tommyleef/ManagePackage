@@ -57,9 +57,14 @@ namespace manageObj
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.rbcuss = new System.Windows.Forms.RadioButton();
 			this.rbcute = new System.Windows.Forms.RadioButton();
+			this.tbwks = new System.Windows.Forms.TextBox();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.tbpackage = new System.Windows.Forms.TextBox();
+			this.btAutoStatus = new System.Windows.Forms.Button();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvpkgname)).BeginInit();
 			this.groupBox1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
@@ -179,7 +184,7 @@ namespace manageObj
 			// btreset
 			// 
 			this.btreset.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btreset.Location = new System.Drawing.Point(153, 175);
+			this.btreset.Location = new System.Drawing.Point(153, 215);
 			this.btreset.Name = "btreset";
 			this.btreset.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.btreset.Size = new System.Drawing.Size(95, 26);
@@ -205,7 +210,7 @@ namespace manageObj
 			// btdelete
 			// 
 			this.btdelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btdelete.Location = new System.Drawing.Point(153, 215);
+			this.btdelete.Location = new System.Drawing.Point(153, 255);
 			this.btdelete.Name = "btdelete";
 			this.btdelete.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.btdelete.Size = new System.Drawing.Size(95, 26);
@@ -217,7 +222,7 @@ namespace manageObj
 			// btimport
 			// 
 			this.btimport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btimport.Location = new System.Drawing.Point(153, 255);
+			this.btimport.Location = new System.Drawing.Point(153, 295);
 			this.btimport.Name = "btimport";
 			this.btimport.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.btimport.Size = new System.Drawing.Size(95, 26);
@@ -231,7 +236,7 @@ namespace manageObj
 			this.groupBox1.Controls.Add(this.rbcuss);
 			this.groupBox1.Controls.Add(this.rbcute);
 			this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBox1.Location = new System.Drawing.Point(153, 295);
+			this.groupBox1.Location = new System.Drawing.Point(153, 329);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(95, 92);
 			this.groupBox1.TabIndex = 23;
@@ -258,11 +263,56 @@ namespace manageObj
 			this.rbcute.Text = "CUTE";
 			this.rbcute.UseVisualStyleBackColor = true;
 			// 
+			// tbwks
+			// 
+			this.tbwks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbwks.Location = new System.Drawing.Point(7, 25);
+			this.tbwks.Name = "tbwks";
+			this.tbwks.Size = new System.Drawing.Size(81, 26);
+			this.tbwks.TabIndex = 24;
+			this.tbwks.TextChanged += new System.EventHandler(this.tbwksTextChanged);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.tbpackage);
+			this.groupBox2.Controls.Add(this.tbwks);
+			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBox2.Location = new System.Drawing.Point(153, 428);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(95, 92);
+			this.groupBox2.TabIndex = 25;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Filter";
+			// 
+			// tbpackage
+			// 
+			this.tbpackage.Enabled = false;
+			this.tbpackage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tbpackage.Location = new System.Drawing.Point(7, 57);
+			this.tbpackage.Name = "tbpackage";
+			this.tbpackage.Size = new System.Drawing.Size(81, 26);
+			this.tbpackage.TabIndex = 25;
+			this.tbpackage.TextChanged += new System.EventHandler(this.tbpackageTextChanged);
+			// 
+			// btAutoStatus
+			// 
+			this.btAutoStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btAutoStatus.Location = new System.Drawing.Point(153, 175);
+			this.btAutoStatus.Name = "btAutoStatus";
+			this.btAutoStatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.btAutoStatus.Size = new System.Drawing.Size(95, 26);
+			this.btAutoStatus.TabIndex = 26;
+			this.btAutoStatus.Text = "AutoStatus";
+			this.btAutoStatus.UseVisualStyleBackColor = true;
+			this.btAutoStatus.Click += new System.EventHandler(this.BtAutoStatusClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1096, 586);
+			this.Controls.Add(this.btAutoStatus);
+			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.btimport);
 			this.Controls.Add(this.btdelete);
@@ -283,9 +333,15 @@ namespace manageObj
 			this.statusStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvpkgname)).EndInit();
 			this.groupBox1.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button btAutoStatus;
+		private System.Windows.Forms.TextBox tbpackage;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.TextBox tbwks;
 		private System.Windows.Forms.RadioButton rbcute;
 		private System.Windows.Forms.RadioButton rbcuss;
 		private System.Windows.Forms.GroupBox groupBox1;
