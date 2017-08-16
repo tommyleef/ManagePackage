@@ -17,6 +17,8 @@ using System.Net.NetworkInformation;
 using System.DirectoryServices;
 using System.ServiceProcess;
 using System.IO;
+using System.Linq;
+using System.Diagnostics;
 
 namespace manageObj
 {
@@ -208,7 +210,7 @@ namespace manageObj
 				string myResult = outParams["ReturnValue"].ToString();
 				if( string.Equals( "0" , myResult , StringComparison.OrdinalIgnoreCase) )
 				{
-					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" active successful. Workstation: "+strSelectedIws;
+					toolStripStatusLabel3.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" active successful. Workstation: "+strSelectedIws;					
 					fslrdrhandle( strSelectedIws, dgvrselected.Cells["Id"].Value.ToString() );
 					listpackages();
 				}
@@ -228,31 +230,83 @@ namespace manageObj
 		{
 			try
 			{
-				string ObjectPath = string.Format(@"\\{0}\root\default:VirtualSoftwareSublayer.PackageId='{1}'", wks, pkgid );
-				ManagementObject SVSClass = new ManagementObject(ObjectPath);
-				ManagementObjectCollection vspCollection =  vspClass.GetInstances();
+				string ObjectPath = string.Format(@"\\{0}\root\default:VirtualSoftwareSublayer", wks );
+				ManagementClass layer = new ManagementClass(ObjectPath);
+				ManagementObjectCollection layerCollections = layer.GetInstances();
 				toolStripProgressBar1.PerformStep();
 				
 				List<string> filepath = new List<string>();
 				
-				foreach (ManagementObject vspObject in vspCollection)
+				foreach (ManagementObject layerObject in layerCollections)
 	            {
-					if( vspObject.GetPropertyValue("FileRedirectPath") != null )
-						filepath.Add( vspObject.GetPropertyValue("FileRedirectPath").ToString() );
+					if( layerObject.GetPropertyValue("PackageId") != null )
+					{
+						string strpkgid = layerObject.GetPropertyValue("PackageId").ToString();
+						if( string.Equals( pkgid , strpkgid , StringComparison.Ordinal ) )
+						{
+							if( layerObject.GetPropertyValue("FileRedirectPath") != null )
+								filepath.Add( layerObject.GetPropertyValue("FileRedirectPath").ToString().Split('\\').Last() );
+						}
+					}					
 				}
 				
-				/*if( filepath.Count != 0 )
+				toolStripProgressBar1.PerformStep();
+				if( filepath.Count != 0 )
 				{
 					foreach( string path in filepath )
 					{
-						
+						// verify if directory "Meta" Exist
+						string dirMeta = string.Format(@"\\{0}\c$\fslrdr\{1}\Meta\",wks,path);
+						if( Directory.Exists( dirMeta ) )
+						{
+							DirectoryInfo di = new DirectoryInfo( dirMeta );
+							if( di != null )
+							{
+								FileInfo[] subfiles = di.GetFiles("*.vbs");
+								if( subfiles.Length > 0 )
+								{
+									foreach(FileInfo subfile in subfiles)
+									{
+										subfile.CopyTo("c:\\SITA\\fslrdrvbs123456789.vbs");
+										ExecuteVbsLocal( wks );
+									}
+								}
+								else
+									toolStripStatusLabel2.Text = "The number of vbs files:"+subfiles.Length;
+							}
+						}
 					}
-				}*/
-				SVSClass.Dispose();
+				}
+				layer.Dispose();
 			}
 			catch( Exception ex )
 			{
 				toolStripStatusLabel2.Text = "fslrdrhandle error:"+ex.Message;
+			}
+		}
+		
+		private void ExecuteVbsLocal(string _wks)
+		{
+			try
+			{
+				string vbstext = File.ReadAllText("c:\\SITA\\fslrdrvbs123456789.vbs");
+				vbstext = vbstext.Replace( "C:\\" , string.Format(@"\\{0}\c$\",_wks) );
+				vbstext = vbstext.Replace( "c:\\" , string.Format(@"\\{0}\c$\",_wks) );
+				File.WriteAllText("c:\\SITA\\fslrdrvbs123456789.vbs",vbstext);
+				
+				Process scriptProc = new Process();
+				scriptProc.StartInfo.FileName = @"c:\SITA\fslrdrvbs123456789.vbs";
+				scriptProc.Start();
+				scriptProc.WaitForExit();
+				scriptProc.Close();				
+			}
+			catch( Exception ex )
+			{
+				toolStripStatusLabel2.Text = "ExecuteVbsLocal error:"+ex.Message;
+			}
+			finally
+			{
+				File.Delete("c:\\SITA\\fslrdrvbs123456789.vbs");
 			}
 		}
 		

@@ -44,6 +44,7 @@ namespace manageObj
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.dgvpkgname = new System.Windows.Forms.DataGridView();
 			this.lbiws = new System.Windows.Forms.ListBox();
 			this.btlist = new System.Windows.Forms.Button();
@@ -72,7 +73,8 @@ namespace manageObj
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStripStatusLabel1,
 									this.toolStripProgressBar1,
-									this.toolStripStatusLabel2});
+									this.toolStripStatusLabel2,
+									this.toolStripStatusLabel3});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 564);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(1096, 22);
@@ -96,6 +98,12 @@ namespace manageObj
 			this.toolStripStatusLabel2.MergeIndex = 2;
 			this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
 			this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 17);
+			// 
+			// toolStripStatusLabel3
+			// 
+			this.toolStripStatusLabel3.MergeIndex = 3;
+			this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+			this.toolStripStatusLabel3.Size = new System.Drawing.Size(0, 17);
 			// 
 			// dgvpkgname
 			// 
@@ -327,7 +335,7 @@ namespace manageObj
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(1112, 625);
 			this.Name = "MainForm";
-			this.Text = "Manage Package V 1.1";
+			this.Text = "Manage Package V 1.2";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
@@ -338,6 +346,7 @@ namespace manageObj
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
 		private System.Windows.Forms.Button btAutoStatus;
 		private System.Windows.Forms.TextBox tbpackage;
 		private System.Windows.Forms.GroupBox groupBox2;
