@@ -48,10 +48,10 @@ namespace manageObj
 			
 		    dtpkglist.Columns.Add("PackageName");
 			dtpkglist.Columns.Add("Active");
-			dtpkglist.Columns.Add("Id");
+			dtpkglist.Columns.Add("AutoActivate");			
 			dtpkglist.Columns.Add("ActivatedTime");
 			dtpkglist.Columns.Add("CreatedTime");
-			dtpkglist.Columns.Add("AutoActivate");
+			dtpkglist.Columns.Add("Id");
 			dtpkglist.Columns.Add("ResetTime");
 		}
 		
@@ -88,7 +88,7 @@ namespace manageObj
 		
 		void BtlistClick(object sender, EventArgs e)
 		{
-			listpackages();
+			listpackages(string.Empty);
 			tbwks.Text = string.Empty;
 			tbpackage.Enabled = true;
 			toolStripProgressBar1.Value = 0;
@@ -98,7 +98,7 @@ namespace manageObj
 		private DataRow drpkg;
 		private List<string> wkslist = new List<string>();
 		
-		private void listpackages()
+		private void listpackages(string _pkgid)
 		{
 			if( !Islbiwsselected() )
 			{
@@ -160,13 +160,26 @@ namespace manageObj
 				dgvpkgname.DataSource = dtpkglist;
 				dgvpkgname.Columns[0].Width = 335;
 				dgvpkgname.Columns[1].Width = 50;
-				dgvpkgname.Columns[2].Width = 40;
+				dgvpkgname.Columns[2].Width = 50;				
 				dgvpkgname.Columns[3].Width = 170;
 				dgvpkgname.Columns[4].Width = 170;
+				dgvpkgname.Columns[5].Width = 40;
+				
+				if( !string.IsNullOrEmpty( _pkgid ) )
+					SelectRowOriginal( _pkgid );
 			}
 			catch( Exception ex )
 			{
 				toolStripStatusLabel2.Text = "Catch error:"+ex.Message;
+			}
+		}
+		
+		private void SelectRowOriginal( string packageid )
+		{
+			foreach( DataGridViewRow row in dgvpkgname.Rows )
+			{
+				if( string.Equals( row.Cells["Id"].Value.ToString() , packageid , StringComparison.Ordinal ) )
+					row.Selected = true;
 			}
 		}
 		
@@ -188,6 +201,7 @@ namespace manageObj
 		void BtactivateClick(object sender, EventArgs e)
 		{
 			DataGridViewRow dgvrselected = dgvpkgname.SelectedRows[0];
+			string pkgid = dgvrselected.Cells["Id"].Value.ToString();
 			try
 			{
 				if( string.Equals("True",dgvrselected.Cells["Active"].Value.ToString(),StringComparison.OrdinalIgnoreCase ))
@@ -212,7 +226,7 @@ namespace manageObj
 				{
 					toolStripStatusLabel3.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" active successful. Workstation: "+strSelectedIws;					
 					fslrdrhandle( strSelectedIws, dgvrselected.Cells["Id"].Value.ToString() );
-					listpackages();
+					listpackages( dgvrselected.Cells["Id"].Value.ToString() );
 				}
 				else
 					toolStripStatusLabel2.Text = "Return: "+myResult+" "+dgvrselected.Cells["PackageName"].Value.ToString()+" active failed. Workstation: "+strSelectedIws;
@@ -347,7 +361,7 @@ namespace manageObj
 				{
 					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" deactivate successful. Workstation: "+strSelectedIws+".";
 					toolStripProgressBar1.PerformStep();
-					listpackages();
+					listpackages(dgvrselected.Cells["Id"].Value.ToString());
 				}
 				else
 					toolStripStatusLabel2.Text = "Return: "+myResult+" "+dgvrselected.Cells["PackageName"].Value.ToString()+" deactivate failed. Workstation: "+strSelectedIws;
@@ -385,7 +399,7 @@ namespace manageObj
 				{
 					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" delete successful. Workstation: "+strSelectedIws+".";
 					toolStripProgressBar1.PerformStep();
-					listpackages();
+					listpackages(string.Empty);
 				}
 				else
 					toolStripStatusLabel2.Text = "Return: "+myResult+" "+dgvrselected.Cells["PackageName"].Value.ToString()+" delete failed. Workstation: "+strSelectedIws;
@@ -446,7 +460,7 @@ namespace manageObj
 				{
 					toolStripStatusLabel2.Text = myFile+" import successful. Workstation: "+strSelectedIws+".";
 					toolStripProgressBar1.PerformStep();
-					listpackages();
+					listpackages(string.Empty);
 				}
 				else
 					toolStripStatusLabel2.Text = "Return: "+myResult+myFile+". Import failed. Workstation: "+strSelectedIws;
@@ -471,7 +485,7 @@ namespace manageObj
 				{
 					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" reset successful. Workstation: "+strSelectedIws+".";
 					toolStripProgressBar1.PerformStep();
-					listpackages();
+					listpackages(dgvrselected.Cells["Id"].Value.ToString());
 				}
 				else
 					toolStripStatusLabel2.Text = "Return: "+strResult+". Reset failed. Workstation: "+strSelectedIws;
@@ -518,17 +532,17 @@ namespace manageObj
 		    mySearcher.Filter = (@"(objectClass=computer)");    
 		    mySearcher.SizeLimit = int.MaxValue;
     		mySearcher.PageSize = int.MaxValue;
-    		
+    		wkslist.Clear();
     		if( rbcute.Checked )
     		{
 	    		foreach(SearchResult resEnt in mySearcher.FindAll())
 			    {
 	    			string ComputerName = resEnt.Properties["cn"][0].ToString();
 	
-	    			if (ComputerName.Contains("CK") || ComputerName.Contains("GT") || ComputerName.Contains("BS") || ComputerName.Contains("BO") || ComputerName.Contains("XSR") || ComputerName.Contains("TD"))
-			        {
+	    			//if (ComputerName.Contains("CK") || ComputerName.Contains("GT") || ComputerName.Contains("BS") || ComputerName.Contains("BO") || ComputerName.Contains("XSR") || ComputerName.Contains("TD"))
+			        //{
 			        	wkslist.Add(ComputerName);
-			        }
+			        //}
 			    }
     		}
     		else if( rbcuss.Checked )
@@ -537,10 +551,10 @@ namespace manageObj
 			    {
 	    			string ComputerName = resEnt.Properties["cn"][0].ToString();
 	
-			        if ( ComputerName.Contains("AKA") )
-			        {
+			        //if ( ComputerName.Contains("AKA") )
+			        //{
 			        	wkslist.Add(ComputerName);
-			        }
+			        //}
 			    }
     		}
 		
@@ -601,7 +615,7 @@ namespace manageObj
 				{
 					toolStripStatusLabel2.Text = dgvrselected.Cells["PackageName"].Value.ToString()+" invert auto activate successful. Workstation: "+strSelectedIws+".";
 					toolStripProgressBar1.PerformStep();
-					listpackages();
+					listpackages(dgvrselected.Cells["Id"].Value.ToString());
 				}
 				else
 					toolStripStatusLabel2.Text = "Return: "+myResult+" "+dgvrselected.Cells["PackageName"].Value.ToString()+" invert auto activate failed. Workstation: "+strSelectedIws;
