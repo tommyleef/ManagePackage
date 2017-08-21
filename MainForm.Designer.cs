@@ -62,10 +62,12 @@ namespace manageObj
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.tbpackage = new System.Windows.Forms.TextBox();
 			this.btAutoStatus = new System.Windows.Forms.Button();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvpkgname)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
@@ -130,13 +132,12 @@ namespace manageObj
 			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvpkgname.DefaultCellStyle = dataGridViewCellStyle2;
-			this.dgvpkgname.Location = new System.Drawing.Point(257, 12);
-			this.dgvpkgname.MinimumSize = new System.Drawing.Size(827, 545);
+			this.dgvpkgname.Location = new System.Drawing.Point(275, 12);
 			this.dgvpkgname.MultiSelect = false;
 			this.dgvpkgname.Name = "dgvpkgname";
 			this.dgvpkgname.RowHeadersVisible = false;
 			this.dgvpkgname.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvpkgname.Size = new System.Drawing.Size(827, 545);
+			this.dgvpkgname.Size = new System.Drawing.Size(809, 545);
 			this.dgvpkgname.TabIndex = 14;
 			// 
 			// lbiws
@@ -146,10 +147,9 @@ namespace manageObj
 			this.lbiws.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lbiws.FormattingEnabled = true;
 			this.lbiws.ItemHeight = 20;
-			this.lbiws.Location = new System.Drawing.Point(13, 13);
-			this.lbiws.MinimumSize = new System.Drawing.Size(130, 544);
+			this.lbiws.Location = new System.Drawing.Point(13, 73);
 			this.lbiws.Name = "lbiws";
-			this.lbiws.Size = new System.Drawing.Size(130, 544);
+			this.lbiws.Size = new System.Drawing.Size(130, 484);
 			this.lbiws.TabIndex = 15;
 			this.lbiws.SelectedIndexChanged += new System.EventHandler(this.LbiwsSelectedIndexChanged);
 			// 
@@ -159,7 +159,7 @@ namespace manageObj
 			this.btlist.Location = new System.Drawing.Point(153, 55);
 			this.btlist.Name = "btlist";
 			this.btlist.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.btlist.Size = new System.Drawing.Size(95, 26);
+			this.btlist.Size = new System.Drawing.Size(116, 26);
 			this.btlist.TabIndex = 16;
 			this.btlist.Text = "List";
 			this.btlist.UseVisualStyleBackColor = true;
@@ -171,7 +171,7 @@ namespace manageObj
 			this.btactivate.Location = new System.Drawing.Point(153, 95);
 			this.btactivate.Name = "btactivate";
 			this.btactivate.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.btactivate.Size = new System.Drawing.Size(95, 26);
+			this.btactivate.Size = new System.Drawing.Size(116, 26);
 			this.btactivate.TabIndex = 17;
 			this.btactivate.Text = "Activate";
 			this.btactivate.UseVisualStyleBackColor = true;
@@ -183,7 +183,7 @@ namespace manageObj
 			this.btdeacti.Location = new System.Drawing.Point(153, 135);
 			this.btdeacti.Name = "btdeacti";
 			this.btdeacti.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.btdeacti.Size = new System.Drawing.Size(95, 26);
+			this.btdeacti.Size = new System.Drawing.Size(116, 26);
 			this.btdeacti.TabIndex = 18;
 			this.btdeacti.Text = "DeActivate";
 			this.btdeacti.UseVisualStyleBackColor = true;
@@ -195,7 +195,7 @@ namespace manageObj
 			this.btreset.Location = new System.Drawing.Point(153, 215);
 			this.btreset.Name = "btreset";
 			this.btreset.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.btreset.Size = new System.Drawing.Size(95, 26);
+			this.btreset.Size = new System.Drawing.Size(116, 26);
 			this.btreset.TabIndex = 19;
 			this.btreset.Text = "Reset";
 			this.btreset.UseVisualStyleBackColor = true;
@@ -221,7 +221,7 @@ namespace manageObj
 			this.btdelete.Location = new System.Drawing.Point(153, 255);
 			this.btdelete.Name = "btdelete";
 			this.btdelete.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.btdelete.Size = new System.Drawing.Size(95, 26);
+			this.btdelete.Size = new System.Drawing.Size(116, 26);
 			this.btdelete.TabIndex = 21;
 			this.btdelete.Text = "Delete";
 			this.btdelete.UseVisualStyleBackColor = true;
@@ -233,7 +233,7 @@ namespace manageObj
 			this.btimport.Location = new System.Drawing.Point(153, 295);
 			this.btimport.Name = "btimport";
 			this.btimport.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.btimport.Size = new System.Drawing.Size(95, 26);
+			this.btimport.Size = new System.Drawing.Size(116, 26);
 			this.btimport.TabIndex = 22;
 			this.btimport.Text = "Import";
 			this.btimport.UseVisualStyleBackColor = true;
@@ -244,9 +244,9 @@ namespace manageObj
 			this.groupBox1.Controls.Add(this.rbcuss);
 			this.groupBox1.Controls.Add(this.rbcute);
 			this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBox1.Location = new System.Drawing.Point(153, 329);
+			this.groupBox1.Location = new System.Drawing.Point(153, 385);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(95, 92);
+			this.groupBox1.Size = new System.Drawing.Size(116, 84);
 			this.groupBox1.TabIndex = 23;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Group";
@@ -276,31 +276,32 @@ namespace manageObj
 			this.tbwks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tbwks.Location = new System.Drawing.Point(7, 25);
 			this.tbwks.Name = "tbwks";
-			this.tbwks.Size = new System.Drawing.Size(81, 26);
+			this.tbwks.Size = new System.Drawing.Size(117, 26);
 			this.tbwks.TabIndex = 24;
 			this.tbwks.TextChanged += new System.EventHandler(this.tbwksTextChanged);
+			this.tbwks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbwksKeyDown);
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.tbpackage);
 			this.groupBox2.Controls.Add(this.tbwks);
 			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBox2.Location = new System.Drawing.Point(153, 428);
+			this.groupBox2.Location = new System.Drawing.Point(13, 8);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(95, 92);
+			this.groupBox2.Size = new System.Drawing.Size(130, 59);
 			this.groupBox2.TabIndex = 25;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Filter";
+			this.groupBox2.Text = "IWS Filter";
 			// 
 			// tbpackage
 			// 
 			this.tbpackage.Enabled = false;
 			this.tbpackage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tbpackage.Location = new System.Drawing.Point(7, 57);
+			this.tbpackage.Location = new System.Drawing.Point(8, 24);
 			this.tbpackage.Name = "tbpackage";
-			this.tbpackage.Size = new System.Drawing.Size(81, 26);
+			this.tbpackage.Size = new System.Drawing.Size(102, 26);
 			this.tbpackage.TabIndex = 25;
 			this.tbpackage.TextChanged += new System.EventHandler(this.tbpackageTextChanged);
+			this.tbpackage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbpackageKeyDown);
 			// 
 			// btAutoStatus
 			// 
@@ -308,17 +309,29 @@ namespace manageObj
 			this.btAutoStatus.Location = new System.Drawing.Point(153, 175);
 			this.btAutoStatus.Name = "btAutoStatus";
 			this.btAutoStatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.btAutoStatus.Size = new System.Drawing.Size(95, 26);
+			this.btAutoStatus.Size = new System.Drawing.Size(116, 26);
 			this.btAutoStatus.TabIndex = 26;
-			this.btAutoStatus.Text = "AutoStatus";
+			this.btAutoStatus.Text = "AutoActivate";
 			this.btAutoStatus.UseVisualStyleBackColor = true;
 			this.btAutoStatus.Click += new System.EventHandler(this.BtAutoStatusClick);
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.tbpackage);
+			this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBox3.Location = new System.Drawing.Point(153, 328);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(116, 57);
+			this.groupBox3.TabIndex = 27;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Layer Filter";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1096, 586);
+			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.btAutoStatus);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
@@ -343,9 +356,12 @@ namespace manageObj
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
 		private System.Windows.Forms.Button btAutoStatus;
 		private System.Windows.Forms.TextBox tbpackage;

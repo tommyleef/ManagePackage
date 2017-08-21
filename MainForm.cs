@@ -89,7 +89,6 @@ namespace manageObj
 		void BtlistClick(object sender, EventArgs e)
 		{
 			listpackages(string.Empty);
-			tbwks.Text = string.Empty;
 			tbpackage.Enabled = true;
 			toolStripProgressBar1.Value = 0;
 		}
@@ -158,7 +157,7 @@ namespace manageObj
 	            }
 				toolStripProgressBar1.PerformStep();
 				dgvpkgname.DataSource = dtpkglist;
-				dgvpkgname.Columns[0].Width = 335;
+				dgvpkgname.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 				dgvpkgname.Columns[1].Width = 50;
 				dgvpkgname.Columns[2].Width = 50;				
 				dgvpkgname.Columns[3].Width = 170;
@@ -513,6 +512,7 @@ namespace manageObj
 		
 		void radioButton_CheckedChanged(object sender, EventArgs e)
 		{
+		    tbwks.Text = string.Empty;
 			string str_ouname = String.Empty;
 			if( rbcute.Checked )
 				str_ouname = "CUTE-WKS";
@@ -626,6 +626,18 @@ namespace manageObj
 				toolStripProgressBar1.Value = 0;
 			}
 			toolStripProgressBar1.Value = 0;
+		}
+		
+		void TbwksKeyDown(object sender, KeyEventArgs e)
+		{
+			if( e.KeyCode == Keys.Escape )
+				tbwks.Text = string.Empty;
+		}
+		
+		void TbpackageKeyDown(object sender, KeyEventArgs e)
+		{
+			if( e.KeyCode == Keys.Escape )
+				tbpackage.Text = string.Empty;
 		}
 	}
 }
