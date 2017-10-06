@@ -156,6 +156,7 @@ namespace manageObj
 					dtpkglist.Rows.Add(drpkg);
 	            }
 				toolStripProgressBar1.PerformStep();
+				dtpkglist.DefaultView.Sort = "PackageName";
 				dgvpkgname.DataSource = dtpkglist;
 				dgvpkgname.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 				dgvpkgname.Columns[1].Width = 50;
@@ -325,7 +326,21 @@ namespace manageObj
 		
 		void LbiwsSelectedIndexChanged(object sender, EventArgs e)
 		{
-			
+			if( lbiws.SelectedItems.Count > 1 )
+			{
+				btlist.Enabled = false;
+				btimport.Enabled = false;
+			}
+			else if( lbiws.SelectedItems.Count == 1 )
+			{
+				btlist.Enabled = true;
+				btimport.Enabled = true;
+			}
+			else
+			{
+				btlist.Enabled = true;
+				btimport.Enabled = true;
+			}
 		}
 		
 		void BtdeactiClick(object sender, EventArgs e)

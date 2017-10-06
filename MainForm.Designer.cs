@@ -149,6 +149,7 @@ namespace manageObj
 			this.lbiws.ItemHeight = 20;
 			this.lbiws.Location = new System.Drawing.Point(13, 73);
 			this.lbiws.Name = "lbiws";
+			this.lbiws.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.lbiws.Size = new System.Drawing.Size(130, 484);
 			this.lbiws.TabIndex = 15;
 			this.lbiws.SelectedIndexChanged += new System.EventHandler(this.LbiwsSelectedIndexChanged);
@@ -348,7 +349,7 @@ namespace manageObj
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(1112, 625);
 			this.Name = "MainForm";
-			this.Text = "Manage Package V 1.2";
+			this.Text = "Manage Package V 1.3";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
