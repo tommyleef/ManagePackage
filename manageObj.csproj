@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <ApplicationIcon>f-f_health_55-s32_f_health_55_1bg.ico</ApplicationIcon>
+    <ApplicationIcon>..\..\..\..\Downloads\sita.ico</ApplicationIcon>
     <NoWin32Manifest>False</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">

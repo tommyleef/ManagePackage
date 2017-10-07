@@ -525,6 +525,22 @@ namespace manageObj
 	        return myResult;
     	}
 		
+		/*public class ComboboxItem
+		{
+		    public string Text { get; set; }
+		    public int Value { get; set; }
+		    
+		    public ComboboxItem(string name, int value)
+		    {
+        		Text = name; Value = value;
+		    }
+		
+		    public override string ToString()
+		    {
+		        return Text;
+		    }
+		}*/
+		
 		void radioButton_CheckedChanged(object sender, EventArgs e)
 		{
 		    tbwks.Text = string.Empty;
@@ -544,24 +560,36 @@ namespace manageObj
 		    DirectoryEntry entry = new DirectoryEntry( str_entry );    
 		    DirectorySearcher mySearcher = new DirectorySearcher(entry);
 
-		    mySearcher.Filter = (@"(objectClass=computer)");    
-		    mySearcher.SizeLimit = int.MaxValue;
-    		mySearcher.PageSize = int.MaxValue;
+		    
     		wkslist.Clear();
     		if( rbcute.Checked )
     		{
+    			cbsubou.Visible =true;
+    			//int itemnb = 0;
+    			
+    			mySearcher.Filter = (@"(objectClass=OrganizationalUnit)");    
+		    	mySearcher.SizeLimit = int.MaxValue;
+    			mySearcher.PageSize = int.MaxValue;
+    			if( cbsubou.Items.Count != 0 )
+    				cbsubou.Items.Clear();
+    			
 	    		foreach(SearchResult resEnt in mySearcher.FindAll())
 			    {
-	    			string ComputerName = resEnt.Properties["cn"][0].ToString();
-	
-	    			//if (ComputerName.Contains("CK") || ComputerName.Contains("GT") || ComputerName.Contains("BS") || ComputerName.Contains("BO") || ComputerName.Contains("XSR") || ComputerName.Contains("TD"))
-			        //{
-			        	wkslist.Add(ComputerName);
-			        //}
+	    			string subouname = resEnt.Properties["ou"][0].ToString();	    			
+	    			//cbsubou.Items.Add(new ComboboxItem(subouname,itemnb+1));
+	    			cbsubou.Items.Add(subouname);
 			    }
+	    		
+	    		cbsubou.SelectedItem = "VCUTE-WKS";
     		}
     		else if( rbcuss.Checked )
     		{
+    			cbsubou.Visible=false;
+    			
+    			mySearcher.Filter = (@"(objectClass=computer)");    
+		    	mySearcher.SizeLimit = int.MaxValue;
+    			mySearcher.PageSize = int.MaxValue;
+    			
     			foreach(SearchResult resEnt in mySearcher.FindAll())
 			    {
 	    			string ComputerName = resEnt.Properties["cn"][0].ToString();
@@ -578,8 +606,11 @@ namespace manageObj
 		    
 		    wkslist.Sort();
 		    lbiws.Items.Clear();
-		    lbiws.Items.AddRange(wkslist.ToArray());
-		    lbiws.SelectedIndex = 0;
+		    if( wkslist.Count != 0 )
+		    {
+		    	lbiws.Items.AddRange(wkslist.ToArray());
+		    	lbiws.SelectedIndex = 0;
+		    }
 		}
 		
 		void tbwksTextChanged(object sender, EventArgs e)
@@ -594,7 +625,10 @@ namespace manageObj
 				}
 			}
 			else
-				lbiws.Items.AddRange( wkslist.ToArray() );
+			{
+				if( wkslist.Count != 0)
+					lbiws.Items.AddRange( wkslist.ToArray() );
+			}
 
 		}
 		
@@ -653,6 +687,45 @@ namespace manageObj
 		{
 			if( e.KeyCode == Keys.Escape )
 				tbpackage.Text = string.Empty;
+		}
+		
+		void CbsubouSelectedIndexChanged(object sender, EventArgs e)
+		{
+			string strsite = Environment.UserDomainName;
+			string str_ouname = "CUTE-WKS";
+			string strsubou = cbsubou.SelectedItem.ToString();
+			string str_entry;
+			
+			if( string.Equals( str_ouname, strsubou , StringComparison.OrdinalIgnoreCase ) )
+				str_entry = string.Format(@"LDAP://OU={0},DC={1},DC=LOCAL",str_ouname,strsite);
+			else
+				str_entry = string.Format(@"LDAP://OU={0},OU={1},DC={2},DC=LOCAL",strsubou,str_ouname,strsite);
+
+		    DirectoryEntry cbentry = new DirectoryEntry( str_entry );    
+		    DirectorySearcher cbSearcher = new DirectorySearcher(cbentry);
+		    
+		    cbSearcher.Filter = (@"(objectClass=computer)");    
+	    	cbSearcher.SizeLimit = int.MaxValue;
+			cbSearcher.PageSize = int.MaxValue;
+			
+			wkslist.Clear();
+			
+			foreach(SearchResult resEnt in cbSearcher.FindAll())
+		    {
+    			string ComputerName = resEnt.Properties["cn"][0].ToString();
+				wkslist.Add(ComputerName);
+		    }
+			
+			cbSearcher.Dispose();
+		    cbentry.Dispose();
+		    
+		    wkslist.Sort();
+		    lbiws.Items.Clear();
+		    if( wkslist.Count != 0 )
+		    {
+		    	lbiws.Items.AddRange(wkslist.ToArray());
+		    	lbiws.SelectedIndex = 0;
+		    }
 		}
 	}
 }

@@ -63,6 +63,7 @@ namespace manageObj
 			this.tbpackage = new System.Windows.Forms.TextBox();
 			this.btAutoStatus = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.cbsubou = new System.Windows.Forms.ComboBox();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvpkgname)).BeginInit();
 			this.groupBox1.SuspendLayout();
@@ -327,11 +328,23 @@ namespace manageObj
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Layer Filter";
 			// 
+			// cbsubou
+			// 
+			this.cbsubou.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cbsubou.FormattingEnabled = true;
+			this.cbsubou.Location = new System.Drawing.Point(153, 476);
+			this.cbsubou.Name = "cbsubou";
+			this.cbsubou.Size = new System.Drawing.Size(116, 28);
+			this.cbsubou.TabIndex = 28;
+			this.cbsubou.Visible = false;
+			this.cbsubou.SelectedIndexChanged += new System.EventHandler(this.CbsubouSelectedIndexChanged);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1096, 586);
+			this.Controls.Add(this.cbsubou);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.btAutoStatus);
 			this.Controls.Add(this.groupBox2);
@@ -349,7 +362,7 @@ namespace manageObj
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(1112, 625);
 			this.Name = "MainForm";
-			this.Text = "Manage Package V 1.3";
+			this.Text = "Manage Package PEK V1.0";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
@@ -362,6 +375,7 @@ namespace manageObj
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ComboBox cbsubou;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
 		private System.Windows.Forms.Button btAutoStatus;
