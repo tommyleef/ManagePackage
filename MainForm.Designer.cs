@@ -335,6 +335,7 @@ namespace manageObj
 			this.cbsubou.Location = new System.Drawing.Point(153, 476);
 			this.cbsubou.Name = "cbsubou";
 			this.cbsubou.Size = new System.Drawing.Size(116, 28);
+			this.cbsubou.Sorted = true;
 			this.cbsubou.TabIndex = 28;
 			this.cbsubou.Visible = false;
 			this.cbsubou.SelectedIndexChanged += new System.EventHandler(this.CbsubouSelectedIndexChanged);
@@ -362,7 +363,7 @@ namespace manageObj
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(1112, 625);
 			this.Name = "MainForm";
-			this.Text = "Manage Package PEK V1.0";
+			this.Text = "Manage Package PEK V1.1";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();

@@ -540,6 +540,7 @@ namespace manageObj
 		        return Text;
 		    }
 		}*/
+		private List<string> distingname = new List<string>(); 
 		
 		void radioButton_CheckedChanged(object sender, EventArgs e)
 		{
@@ -555,7 +556,16 @@ namespace manageObj
 			string strsite = Environment.UserDomainName;
 			lbsite.Text = "Site:"+strsite.Substring(0,3);
 
-			string str_entry = string.Format(@"LDAP://OU={0},DC={1},DC=LOCAL",str_ouname,strsite);
+			string str_entry = string.Empty;
+			
+			if( rbcute.Checked )
+			{
+				str_entry= string.Format(@"LDAP://DC={0},DC=LOCAL",strsite);
+			}
+			else if( rbcuss.Checked )
+			{
+				str_entry= string.Format(@"LDAP://OU={0},DC={1},DC=LOCAL",str_ouname,strsite);
+			}
 
 		    DirectoryEntry entry = new DirectoryEntry( str_entry );    
 		    DirectorySearcher mySearcher = new DirectorySearcher(entry);
@@ -577,7 +587,11 @@ namespace manageObj
 			    {
 	    			string subouname = resEnt.Properties["ou"][0].ToString();	    			
 	    			//cbsubou.Items.Add(new ComboboxItem(subouname,itemnb+1));
-	    			cbsubou.Items.Add(subouname);
+	    			if( subouname.Contains("CUTE-WKS") )
+	    			{
+	    				cbsubou.Items.Add(subouname);
+	    				distingname.Add( resEnt.Properties["distinguishedName"][0].ToString() );
+	    			}
 			    }
 	    		
 	    		cbsubou.SelectedItem = "VCUTE-WKS";
@@ -692,19 +706,15 @@ namespace manageObj
 		void CbsubouSelectedIndexChanged(object sender, EventArgs e)
 		{
 			string strsite = Environment.UserDomainName;
-			string str_ouname = "CUTE-WKS";
-			string strsubou = cbsubou.SelectedItem.ToString();
-			string str_entry;
+			string str_ouname = "OU="+cbsubou.SelectedItem.ToString()+",";
+			string str_entry = string.Format(@"LDAP://{0}", distingname.Find( x => x.Contains( str_ouname ) ) );
 			
-			if( string.Equals( str_ouname, strsubou , StringComparison.OrdinalIgnoreCase ) )
-				str_entry = string.Format(@"LDAP://OU={0},DC={1},DC=LOCAL",str_ouname,strsite);
-			else
-				str_entry = string.Format(@"LDAP://OU={0},OU={1},DC={2},DC=LOCAL",strsubou,str_ouname,strsite);
-
+			//toolStripStatusLabel3.Text = str_entry+"+"+str_ouname;
+			
 		    DirectoryEntry cbentry = new DirectoryEntry( str_entry );    
 		    DirectorySearcher cbSearcher = new DirectorySearcher(cbentry);
 		    
-		    cbSearcher.Filter = (@"(objectClass=computer)");    
+		    cbSearcher.Filter = (@"(objectClass=computer)"); 
 	    	cbSearcher.SizeLimit = int.MaxValue;
 			cbSearcher.PageSize = int.MaxValue;
 			
